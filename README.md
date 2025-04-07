@@ -1,125 +1,79 @@
 # Power BI Quarterly Sales Report for an International Retailer
 
-## 📊 Transforming Retail Data into Actionable Insights
-This project aims to develop a **Quarterly Sales Report** for a medium-sized international retailer, enhancing their business intelligence capabilities. With operations across multiple regions, they have accumulated sales data from various sources over the years. The goal of this project is to transform that data into **actionable insights** for better decision-making using **Microsoft Power BI**.
+📊 **Transforming Retail Data into Actionable Insights**  
+This project aims to develop a Quarterly Sales Report for a medium-sized international retailer, enhancing their business intelligence capabilities. With operations across multiple regions, they have accumulated sales data from various sources over the years. The goal of this project is to transform that data into actionable insights for better decision-making using Microsoft Power BI.
 
 ---
 
 ## 🎯 Project Objective
-The objective is to design a **multi-page Power BI report** that:
-- Provides a **high-level executive summary**.
-- Highlights **top customers** segmented by sales region.
-- Analyzes **top-performing products** by category and performance against targets.
-- Displays **store performance across regions** using a **geographical map visualization**.
+
+The objective is to design a multi-page Power BI report that:
+
+- Provides a high-level executive summary.
+- Highlights top customers segmented by sales region.
+- Analyzes top-performing products by category and performance against targets.
+- Displays store performance across regions using a geographical map visualization.
 
 ---
 
 ## 📢 Milestone Achievements
-This milestone focused on the **Customer Detail page**, including creation of **data visuals, slicers, and measures to support customer analysis**.
+
+### ✅ Previous Milestones
+Focused on the **Customer Detail page**, including creation of visuals, measures, and slicers for analyzing customer data.
+
+### 🆕 New Milestone: KPI Visuals for Executive Summary
+
+This milestone focused on creating robust KPI visuals for **Quarterly Revenue, Profit, and Orders**. It involved implementing dynamic, context-aware DAX logic and resolving issues related to data misalignment, resulting in fully functional, data-driven KPI reporting.
 
 ---
 
-## 📊 Customer Detail Page Overview
-The **Customer Detail** page provides deep insight into **customer behavior, value, and distribution**. Below is a description of all visuals created, along with placeholders where you should insert **screenshots of the visuals and page layout** after uploading the file.
+## 📊 Executive Summary Page Overview
+
+This page delivers high-level business metrics through three custom KPI visuals, highlighting how actual performance compares to quarterly growth targets.
 
 ---
 
 ### 🔖 Visuals Created
 
-### 1️⃣ **Headline Cards**
-- **Unique Customers Card:** Displays the total number of unique customers based on the applied filters.
-- **Revenue per Customer Card:** Shows the average revenue per customer.
-- These are displayed using **card visuals** placed at the top of the page for quick insights.
+1️⃣ **KPI Cards (Custom Build)**
+Each metric is represented by:
+- A **Card Visual** for current quarter value
+- A **Line Chart** comparing actuals to targets over time
+- Metrics:
+  - **Total Revenue vs Target Revenue**
+  - **Total Profit vs Target Profit**
+  - **Total Orders vs Target Orders**
 
-📸 _Insert Screenshot of the Headline Cards here_
+📸 Insert Screenshot of KPI Cards and Line Charts here
 
----
-
-### 2️⃣ **Donut Charts**
-- **Total Customers by Country:** Shows customer distribution by country.
-- **Total Customers by Product Category:** Shows customer distribution by product category.
-- These visuals allow users to understand **where customers are located** and **which product categories they buy from**.
-
-📸 _Insert Screenshot of the Donut Charts here_
+2️⃣ **Target Logic**
+Quarterly targets were set at **5% growth** over the previous quarter, using measures that respect the actual data range of the `Sales[Order Date]` column. This resolved issues with KPI visuals failing to evaluate targets.
 
 ---
 
-### 3️⃣ **Line Chart with Forecast and Trendline**
-- **Total Customers Over Time:** Displays customer growth over time.
-- Users can drill down to **year, quarter, or month**.
-- The visual includes:
-    - A **Trendline** showing overall customer growth.
-    - A **Forecast** projecting customer counts for the next 10 periods with a 95% confidence interval.
+## 🧮 Key DAX Measures Created for This Page
 
-📸 _Insert Screenshot of the Line Chart here_
-
----
-
-### 4️⃣ **Top 20 Customers Table with Conditional Formatting**
-- Displays the **Top 20 customers** ranked by revenue.
-- Columns included:
-    - **Full Name**
-    - **Total Revenue per Customer**
-    - **Total Orders per Customer**
-- The **Revenue per Customer** column has **data bars** applied for visual emphasis.
-
-📸 _Insert Screenshot of the Top 20 Customers Table here_
-
----
-
-### 5️⃣ **Top Customer Insights Cards**
-- A set of 3 cards displaying information about the **Top Customer by Revenue**:
-    - **Top Customer Name**
-    - **Total Revenue from Top Customer**
-    - **Total Orders by Top Customer**
-
-📸 _Insert Screenshot of the Top Customer Cards here_
-
----
-
-### 6️⃣ **Date Slicer**
-- Allows users to filter the **Customer Detail page** by year using a **Between-style slicer**.
-
-📸 _Insert Screenshot of the Date Slicer here_
-
----
-
-## 📅 Key DAX Measures Created for This Page
-| Measure Name | Description |
-|--------------|-------------|
-| Total Customers | Total number of unique customers, dynamically filtered. |
-| Revenue per Customer | Average revenue per customer. |
-| Revenue per Customer Table | Total revenue per customer (used in tables). |
-| Total Orders per Customer | Total orders per customer (used in tables). |
-| Top Customer ID | Identifies the customer with the highest revenue. |
-| Top Customer Name | Returns the name of the top customer. |
-| Top Customer Revenue | Total revenue generated by the top customer. |
-| Top Customer Orders | Total number of orders placed by the top customer. |
+| Measure Name               | Description                                                                 |
+|---------------------------|-----------------------------------------------------------------------------|
+| Previous Quarter Revenue  | Revenue in the quarter prior to the current one                            |
+| Previous Quarter Profit   | Profit in the previous quarter                                              |
+| Previous Quarter Orders   | Number of orders in the previous quarter                                    |
+| Target Revenue            | 5% growth over previous quarter revenue                                     |
+| Target Profit             | 5% growth over previous quarter profit                                      |
+| Target Orders             | 5% growth over previous quarter orders                                      |
 
 ---
 
 ## 🗂️ Star Schema Data Model
-The **Customer Detail page** relies on the following **star schema relationships**:
 
-| Dimension Table | Fact Table (Sales) | Type | Active |
-|-----------------|--------------------|-----|-------|
-| Products[product_code] | Sales[product_code] | One-to-Many | ✅ |
-| Data_Analytics[store code] | Sales[Store Code] | One-to-Many | ✅ |
-| Customers[User UUID] | Sales[User ID] | One-to-Many | ✅ |
-| DateTable[date] | Sales[Order Date] | One-to-Many | ✅ (Active) |
-| DateTable[date] | Sales[Shipping Date] | One-to-Many | ❌ (Inactive) |
+The Executive Summary page leverages the existing star schema from previous milestones:
+
+| Dimension Table           | Fact Table (Sales)   | Type         | Active |
+|---------------------------|----------------------|--------------|--------|
+| Products[product_code]    | Sales[product_code]  | One-to-Many  | ✅      |
+| Data_Analytics[store code]| Sales[Store Code]    | One-to-Many  | ✅      |
+| Customers[User UUID]      | Sales[User ID]       | One-to-Many  | ✅      |
+| DateTable[date]           | Sales[Order Date]    | One-to-Many  | ✅      |
+| DateTable[date]           | Sales[Shipping Date] | One-to-Many  | ❌      |
 
 ---
-
-## 📂 Instructions for GitHub Upload
-### 1️⃣ Save and Upload the Latest `.pbix` File
-Before committing this README, save and upload the latest version of your Power BI file.
-
-- Save your file as:  
-    **Quarterly_Sales_Report.pbix**
-- Upload it to your **GitHub repository** alongside this updated `README.md`.
-
-### 2️⃣ Upload Screenshots
-Take screenshots of each visual described above and place them in a **screenshots folder** in your repository. Update the `README.md` links to point to the images (optional for courses that require image linking in Markdown).
-
-Suggested file structure:
